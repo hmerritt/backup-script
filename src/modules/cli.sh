@@ -38,6 +38,8 @@ BG_WHITE="\e[107m${WHITE}"
 
 
 # Print colored text to the terminal
+# - $1: color
+# - $2: text
 cprint () {
 	echo -e "$1$2${NOCOLOR}"
 }
@@ -47,6 +49,7 @@ cprint () {
 
 
 # Print green/red text
+# - $1: text
 # -> output has green/red text with no background
 green () {
 	cprint $GREEN "${1}"
@@ -58,6 +61,7 @@ red () {
 
 
 # Print success/failure message
+# - $1: text
 # -> output has green/red background with white text
 success () {
 	cprint $BG_GREEN "${1}"
