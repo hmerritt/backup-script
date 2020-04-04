@@ -28,13 +28,13 @@ compress () {
 # - $2: directory of the item to backup
 # - $3: directory of the backup location
 backup () {
-	local tmp_folder="${SCRIPT_PATH_DIRECTORY}/tmp"
-	local tmp_file="${tmp_folder}/${1}"
+	local TMP_FOLDER="${SCRIPT_PATH}/tmp"
+	local TMP_FILE="${TMP_FOLDER}/${1}"
 
-	cd $dir_root_local$2
+	cd $DIR_ROOT_LOCAL$2
 
 	action "Backing up ${1}"
-	compress "${tmp_file}" "${1}"
-	move "${tmp_file}.tar.gz" "${dir_root_backup}${3}${1}.tar.gz"
+	compress "${TMP_FILE}" "${1}"
+	move "${TMP_FILE}.tar.gz" "${DIR_ROOT_BACKUP}${3}${1}.tar.gz"
 	success "done"
 }

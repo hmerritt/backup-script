@@ -1,17 +1,24 @@
 #!/bin/bash
 
 
+# Script path absolute
+SCRIPT_PATH=${0%/*}
+
+
 # Import modules
-source "modules/global.sh"
-source "modules/cli.sh"
-source "modules/files.sh"
+source "${SCRIPT_PATH}/modules/global.sh"
+source "${SCRIPT_PATH}/modules/cli.sh"
+source "${SCRIPT_PATH}/modules/files.sh"
+
+
+##------------------------------------------------------------------------------
 
 
 # Main execution function
 main () {
 
-	dir_root_local=""
-	dir_root_backup=""
+	DIR_ROOT_LOCAL=""
+	DIR_ROOT_BACKUP=""
 
 	# ENTER FOLDERS TO BACKUP HERE
 	##############################
@@ -19,6 +26,9 @@ main () {
 	# backup "profile-images" "/my/images/" "/my/backup/google-drive/images/"
 
 }
+
+
+##------------------------------------------------------------------------------
 
 
 # Print script title & version number
