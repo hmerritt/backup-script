@@ -18,3 +18,23 @@ move () {
 compress () {
 	tar --use-compress-program="pigz --best --recursive" -cvf "${1}.tar.gz" "${2}"
 }
+
+
+##------------------------------------------------------------------------------
+
+
+# Backup individual file/folder
+# - $1: name of item to backup
+# - $2: directory of the item to backup
+# - $3: directory of the backup location
+backup () {
+	local tmp_folder="${SCRIPT_PATH_DIRECTORY}/tmp"
+	local tmp_file="${tmp_folder}/${1}"
+
+	cd $dir_root_local$2
+
+	action "Backing up ${1}"
+	compress "${tmp_file}" "${1}"
+	move "${tmp_file}.tar.gz" "${dir_root_backup}${3}${1}.tar.gz"
+	success "done"
+}
