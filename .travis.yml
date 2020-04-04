@@ -1,0 +1,22 @@
+language: generic
+
+install:
+    - sudo add-apt-repository ppa:neurobin/ppa -y
+    - sudo apt-get update -q
+    - sudo apt-get install shc -y
+    - sudo apt-get install gcc -y
+
+script:
+    - cd src
+    - shc -f backup.sh -o backup
+    - ls
+
+deploy:
+    provider: releases
+    api_key: $GITHUB_OAUTH_TOKEN
+    file:
+        - "backup"
+    skip_cleanup: true
+    on:
+        repo: hmerritt/backup-script
+        tags: true
