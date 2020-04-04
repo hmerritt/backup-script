@@ -34,7 +34,7 @@ BG_LIGHTGREEN="\e[102m${WHITE}"
 BG_WHITE="\e[107m${WHITE}"
 
 
-##-----------------------------------------------
+##------------------------------------------------------------------------------
 
 
 # Print colored text to the terminal
@@ -45,12 +45,16 @@ cprint () {
 }
 
 
-##-----------------------------------------------
+##------------------------------------------------------------------------------
 
 
-# Print green/red text
+# Print colored text
 # - $1: text
-# -> output has green/red text with no background
+# -> output colored text with no background
+white () {
+	cprint $WHITE "${1}"
+}
+
 green () {
 	cprint $GREEN "${1}"
 }
@@ -60,13 +64,19 @@ red () {
 }
 
 
-# Print success/failure message
+##------------------------------------------------------------------------------
+
+
+# Print message by execution state
 # - $1: text
-# -> output has green/red background with white text
 success () {
 	cprint $BG_GREEN "${1}"
 }
 
 failure () {
 	cprint $BG_RED "${1}"
+}
+
+action () {
+	white "\n* ${1}"
 }
