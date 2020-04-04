@@ -2,7 +2,7 @@
 
 
 # Script path absolute
-SCRIPT_PATH=${0%/*}
+SCRIPT_PATH=`dirname "$(readlink -f "$0")"`
 
 
 # Import modules
