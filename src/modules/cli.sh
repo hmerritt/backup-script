@@ -46,8 +46,19 @@ cprint () {
 ##-----------------------------------------------
 
 
+# Print green/red text
+# -> output has green/red text with no background
+green () {
+	cprint $GREEN "${1}"
+}
+
+red () {
+	cprint $RED "${1}"
+}
+
+
 # Print success/failure message
-# -> output has green/red Background with white text
+# -> output has green/red background with white text
 success () {
 	cprint $BG_GREEN "${1}"
 }
@@ -55,6 +66,3 @@ success () {
 failure () {
 	cprint $BG_RED "${1}"
 }
-
-
-##-----------------------------------------------
