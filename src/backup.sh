@@ -18,6 +18,16 @@ title
 ##------------------------------------------------------------------------------
 
 
+# Print script version
+if [ "${ARGS[0]}" == "version" ]; then
+	echo
+	exit
+fi
+
+
+##------------------------------------------------------------------------------
+
+
 # ENTER FOLDERS TO BACKUP HERE
 ##############################
 # backup "name-of-folder" "/directory-of-parent-folder/" "/directory-of-parent-backup-folder/"
