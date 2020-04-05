@@ -63,6 +63,10 @@ red () {
 	cprint $RED "${1}"
 }
 
+orange () {
+	cprint $ORANGE "${1}"
+}
+
 
 ##------------------------------------------------------------------------------
 
@@ -77,6 +81,23 @@ failure () {
 	cprint $BG_RED "${1}"
 }
 
+warning () {
+	orange "Warning: ${1}"
+}
+
 action () {
 	white "\n* ${1}"
+}
+
+task () {
+	white "-> ${1}"
+}
+
+
+##------------------------------------------------------------------------------
+
+
+# Print script title & version number
+title () {
+	green "Backup [Version ${VERSION}]"
 }
