@@ -1,13 +1,16 @@
 #!/bin/bash
 
 
-VERSION="0.1.2"
+VERSION="0.1.3"
 ARGS="$@"
 
 
 ##------------------------------------------------------------------------------
 
 
-# Backup variables
+CURRENT_ACTION=""
+CURRENT_TASK=""
+
+
 DIR_ROOT_LOCAL=""
 DIR_ROOT_BACKUP=""
