@@ -8,9 +8,11 @@ A simple script that compresses files/folders and moves them to a backup locatio
 
 
 ## Install
+Install script dependencies via `install` argument.
 
-### Prerequisites
-- [pigz](https://zlib.net/pigz/) `apt-get install pigz -y`
+```bash
+$ sudo ./backup.sh install
+```
 
 ### Bash on Windows
 Thanks to `WSL`, you can run bash scripts on windows!
@@ -28,28 +30,21 @@ Thanks to `WSL`, you can run bash scripts on windows!
 - Add a file/folder by following the syntax guide below
 
 ```bash
-main () {
+# ENTER FOLDERS TO BACKUP HERE
+##############################
+# backup "name-of-folder" "/directory-of-parent-folder/" "/directory-of-parent-backup-folder/"
+# backup "profile-images" "/my/images/" "/my/backup/google-drive/images/"
 
-	DIR_ROOT_LOCAL=""
-	DIR_ROOT_BACKUP=""
-
-	# ENTER FOLDERS TO BACKUP HERE
-	##############################
-	# backup "name-of-folder" "/directory-of-parent-folder/" "/directory-of-parent-backup-folder/"
-	# backup "profile-images" "/my/images/" "/my/backup/google-drive/images/"
-
-	backup "name of file/folder" "full path to folder" "full path to backup location"
+backup "name of file/folder" "full path to folder" "full path to backup location"
 
 
-	# Lets try a more real example
+# Lets try a more real example
 
-	# We are backing up a folder called "music" that exists in our "documents" folder
-	# This is then packaged up and moved to the "backup" directory
+# We are backing up a folder called "music" that exists in our "documents" folder
+# This is then packaged up and moved to the "backup" directory
 
-	backup "music" "/home/user/documents/" "/home/user/backup/documents/"
+backup "music" "/home/user/documents/" "/home/user/backup/documents/"
 
-	# Original     "/home/user/documents/music/"
-	# Backed-up                            "/home/user/backup/documents/music.tar.gz"
-
-}
+# Original     "/home/user/documents/music/"
+# Backed-up                            "/home/user/backup/documents/music.tar.gz"
 ```
