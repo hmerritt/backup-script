@@ -25,6 +25,21 @@ if [ "${ARGS[0]}" == "version" ]; then
 fi
 
 
+# Install script dependencies
+if [ "${ARGS[0]}" == "install" ]; then
+	action "Installing script dependencies"
+
+	task "Updating package repo"
+	apt-get update -y
+
+	task "Installing pigz"
+	apt-get install pigz -y
+
+	echo
+	exit
+fi
+
+
 ##------------------------------------------------------------------------------
 
 
