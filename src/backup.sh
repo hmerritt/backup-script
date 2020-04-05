@@ -34,6 +34,10 @@ if [ "${ARGS[0]}" == "install" ]; then
 	apt-get update -y
 	onfail "" "Are you root?"
 
+	task "Install tar"
+	apt-get install tar -y
+	onfail "" "Are you root?"
+
 	task "Install pigz"
 	apt-get install pigz -y
 	onfail "" "Are you root?"
