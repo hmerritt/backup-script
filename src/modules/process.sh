@@ -31,7 +31,7 @@ onfail () {
 		if [ "${1}" != "" ]; then
 			failure "${1}"
 		else
-			failure "Failed: ${CURRENT_TASK}"
+			failure "Failed: ${CURRENT_ACTION}"
 		fi
 
 		# Exit script

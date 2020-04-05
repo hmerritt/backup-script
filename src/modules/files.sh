@@ -5,7 +5,7 @@
 # - $1: path to original file
 # - $2: path of new file
 move () {
-	mv "${1}" "${2}"
+	mv "${1}" "${2}" --verbose
 }
 
 
@@ -28,13 +28,20 @@ compress () {
 # - $2: directory of the item to backup
 # - $3: directory of the backup location
 backup () {
+	action "Backing up ${1}"
+
 	local TMP_FOLDER="${SCRIPT_PATH}/tmp"
 	local TMP_FILE="${TMP_FOLDER}/${1}"
 
 	cd $DIR_ROOT_LOCAL$2
 
-	action "Backing up ${1}"
+	task "Compressing ${1}"
 	compress "${TMP_FILE}" "${1}"
+	onfail
+
+	task "Moving ${1} to backup location"
 	move "${TMP_FILE}.tar.gz" "${DIR_ROOT_BACKUP}${3}${1}.tar.gz"
-	success "done"
+	onfail
+
+	success "Completed: ${1}"
 }
