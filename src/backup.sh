@@ -44,6 +44,21 @@ if [ "${ARGS[0]}" == "install" ]; then
 fi
 
 
+# Perform a "quick tar" - create tar of an item in same directory
+# - ARGS[1]: name of file/folder to tar
+if [ "${ARGS[0]}" == "qtar" ] || [ "${ARGS[0]}" == "quick-tar" ]; then
+	action "Creating a Quick-Tar in the same directory"
+
+	task "Tar `green ${ARGS[1]}` -> `green ${ARGS[1]}.tar.gz`"
+	compress "${ARGS[1]}" "${ARGS[1]}"
+	onfail
+
+	echo
+	success "Quick-Tar complete"
+	exit
+fi
+
+
 ##------------------------------------------------------------------------------
 
 
