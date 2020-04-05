@@ -32,13 +32,14 @@ if [ "${ARGS[0]}" == "install" ]; then
 
 	task "Update package repo"
 	apt-get update -y
-	onfail
+	onfail "" "Are you root?"
 
 	task "Install pigz"
 	apt-get install pigz -y
-	onfail
+	onfail "" "Are you root?"
 
 	echo
+	success "Install complete"
 	exit
 fi
 
