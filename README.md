@@ -5,6 +5,21 @@
 A simple script that compresses files/folders and moves them to a backup location
 
 
+
+
+## Install
+
+### Prerequisites
+- [pigz](https://zlib.net/pigz/) `apt-get install pigz -y`
+
+### Bash on Windows
+Thanks to `WSL`, you can run bash scripts on windows!
+
+- [Enable WSL (Windows Subsystem for Linux)](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+
+
+
+
 ## Usage
 
 ### Add files/folders to backup
@@ -22,7 +37,7 @@ main () {
 	##############################
 	# backup "name-of-folder" "/directory-of-parent-folder/" "/directory-of-parent-backup-folder/"
 	# backup "profile-images" "/my/images/" "/my/backup/google-drive/images/"
-	
+
 	backup "name of file/folder" "full path to folder" "full path to backup location"
 
 
@@ -32,14 +47,9 @@ main () {
 	# This is then packaged up and moved to the "backup" directory
 
 	backup "music" "/home/user/documents/" "/home/user/backup/documents/"
-	
+
 	# Original     "/home/user/documents/music/"
 	# Backed-up                            "/home/user/backup/documents/music.tar.gz"
 
 }
 ```
-
-
-## Windows Install Bash
-
-- [Enable WSL (Windows Subsystem for Linux)](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
