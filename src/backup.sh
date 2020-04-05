@@ -7,7 +7,8 @@ SCRIPT_PATH=`dirname "$(readlink -f "$0")"`
 
 # Import modules
 source "${SCRIPT_PATH}/modules/global.sh"
-source "${SCRIPT_PATH}/modules/cli.sh"
+source "${SCRIPT_PATH}/modules/interface.sh"
+source "${SCRIPT_PATH}/modules/process.sh"
 source "${SCRIPT_PATH}/modules/files.sh"
 
 
@@ -27,13 +28,15 @@ fi
 
 # Install script dependencies
 if [ "${ARGS[0]}" == "install" ]; then
-	action "Installing script dependencies"
+	action "Install script dependencies"
 
-	task "Updating package repo"
+	task "Update package repo"
 	apt-get update -y
+	onfail
 
-	task "Installing pigz"
+	task "Install pigz"
 	apt-get install pigz -y
+	onfail
 
 	echo
 	exit
