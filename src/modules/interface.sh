@@ -71,7 +71,7 @@ orange () {
 ##------------------------------------------------------------------------------
 
 
-# Print message by execution state
+# Print message by named state
 # - $1: text
 success () {
 	cprint $BG_GREEN "${1}"
@@ -81,15 +81,21 @@ failure () {
 	cprint $BG_RED "${1}"
 }
 
+error () {
+	red "${1}"
+}
+
 warning () {
-	orange "Warning: ${1}"
+	orange "${1}"
 }
 
 action () {
-	white "\n* ${1}"
+	CURRENT_ACTION="${1}"
+	white "\n${1}"
 }
 
 task () {
+	CURRENT_TASK="${1}"
 	white "-> ${1}"
 }
 
