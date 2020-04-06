@@ -57,8 +57,15 @@ task "Merge module bundle with main backup.sh"
 sed -i "/\# Import modules/r"<(cat "${BUILD_PATH}/modules.sh") "${BUILD_PATH}/backup.sh"
 onfail
 
-task "Clean-up build/ directory"
-rm "${BUILD_PATH}/modules.sh"
+
+action "Compile backup.sh into final binary file"
+shc -f "${BUILD_PATH}/backup.sh" -o "${BUILD_PATH}/backup" -v
+onfail
+
+
+action "Clean build/ directory"
+rm "${BUILD_PATH}/modules.sh" --verbose
+rm "${BUILD_PATH}/backup.sh.x.c" --verbose
 onfail
 
 
