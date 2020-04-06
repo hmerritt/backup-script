@@ -49,3 +49,18 @@ done
 task "Remove all haashbangs from module bundle"
 sed -i "s/\#\!\/bin\/bash//g" "${BUILD_PATH}/modules.sh"
 onfail
+
+
+action "Build singular backup.sh"
+
+task "Merge module bundle with main backup.sh"
+sed -i "/\# Import modules/r"<(cat "${BUILD_PATH}/modules.sh") "${BUILD_PATH}/backup.sh"
+onfail
+
+task "Clean-up build/ directory"
+rm "${BUILD_PATH}/modules.sh"
+onfail
+
+
+echo
+success "Build complete"
