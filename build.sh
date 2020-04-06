@@ -45,3 +45,7 @@ do
 	cat "${MODULES_PATH}/${i}" >> "${BUILD_PATH}/modules.sh"
 	onfail
 done
+
+task "Remove all haashbangs from module bundle"
+sed -i "s/\#\!\/bin\/bash//g" "${BUILD_PATH}/modules.sh"
+onfail
