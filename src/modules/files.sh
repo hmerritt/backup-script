@@ -16,7 +16,7 @@ move () {
 # - $1: name of new tar
 # - $2: path of file/directory to tar
 compress () {
-	tar --use-compress-program="pigz --best --recursive" -cvf "${1}.tar.gz" "${2}"
+	tar --use-compress-program="pigz --best --recursive --no-time" -cvf "${1}.tar.gz" "${2}"
 }
 
 
