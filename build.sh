@@ -27,3 +27,21 @@ if [ ! -d "${BUILD_PATH}" ]; then
 	mkdir --verbose "${BUILD_PATH}"
 fi
 onfail
+
+
+action "Copy backup.sh"
+task "Remove source file links"
+sed -r "s/source .*//g" "${SRC_PATH}/backup.sh" > "${BUILD_PATH}/backup.sh"
+onfail
+
+
+action "Bundle source modules"
+
+declare -a arr=("global.sh" "interface.sh" "process.sh" "files.sh")
+
+for i in "${arr[@]}"
+do
+	task "Add ${i} to bundle"
+	cat "${MODULES_PATH}/${i}" >> "${BUILD_PATH}/modules.sh"
+	onfail
+done
