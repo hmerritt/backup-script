@@ -7,26 +7,48 @@ A simple script that compresses files/folders and moves them to a backup locatio
 
 
 
-## Install
+## Getting Started
+
+
+### Install Dependencies
 Install script dependencies via `install` argument.
 
 ```bash
 $ sudo ./backup.sh install
 ```
 
-### Bash on Windows
+#### Bash on Windows
 Thanks to `WSL`, you can run bash scripts on windows!
 
 - [Enable WSL (Windows Subsystem for Linux)](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+
+
+### Config file
+#### Create config
+In order to add backups, you need to create a separate config file.
+```bash
+$ ./backup.sh setup
+```
+
+#### Load config
+You can load the config file by adding its path after `backup`: `backup <path-to-config>`
+```bash
+$ ./backup.sh <path-to-config>
+```
+> You can have as many config files as you like (this could be used to run different backups)
 
 
 
 
 ## Usage
 
+```bash
+$ ./backup.sh <path-to-config>
+```
+
 ### Add files/folders to backup
 
-- Open `backup.sh` and find the *`ENTER FOLDERS TO BACKUP HERE`* text
+- Open the config file (`backup-config.sh`) and find the *`ENTER FOLDERS TO BACKUP HERE`* text
 - Add a file/folder by following the syntax guide below
 
 ```bash
