@@ -2,3 +2,5 @@
 *.tar.gz
 
 build/*
+
+src/backup-config.*

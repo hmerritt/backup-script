@@ -1,6 +1,9 @@
 #!/bin/bash
 
 
+ARGS=("$@")
+
+
 ## Import modules
 source "modules/module-loader.sh"
 loadmodules "${modules}" "modules"
@@ -82,6 +85,8 @@ fi
 ###############################
 ## backup "name-of-folder" "/directory-of-parent-folder/" "/directory-of-parent-backup-folder/"
 ## backup "profile-images" "/my/images/" "/my/backup/google-drive/images/"
+
+source "${ARGS[0]}"
 
 
 ##------------------------------------------------------------------------------
