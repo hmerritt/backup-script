@@ -130,8 +130,8 @@ fi
 if isfile "${CONFIG_PATH}"; then
 
 	## Load config
+	success "Config loaded"
 	source "${CONFIG_PATH}"
-	success "Loaded config"
 
 else
 
@@ -139,6 +139,7 @@ else
 	error "Unable to open config file: ${CONFIG_PATH}"
 	warning "You can create another config using: backup setup"
 	forcefail
+
 fi
 
 

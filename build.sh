@@ -30,7 +30,7 @@ onfail
 
 action "Copy backup.sh"
 task "Remove source file links"
-sed -r "s/source .*//g" "${SRC_PATH}/backup.sh" > "${BUILD_PATH}/backup.sh"
+sed -r "s/source .*\/modules\/module-loader.sh//" "${SRC_PATH}/backup.sh" > "${BUILD_PATH}/backup.sh"
 onfail
 
 task "Remove loadmodules"
