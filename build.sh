@@ -9,7 +9,7 @@ MODULES_PATH="${SRC_PATH}/modules"
 
 
 ## Import modules
-source "${MODULES_PATH}/moduleloader.sh"
+source "${MODULES_PATH}/module-loader.sh"
 loadmodules "${modules}" "${MODULES_PATH}"
 
 

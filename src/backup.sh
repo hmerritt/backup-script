@@ -2,7 +2,7 @@
 
 
 ## Import modules
-source "modules/moduleloader.sh"
+source "modules/module-loader.sh"
 loadmodules "${modules}" "modules"
 
 
