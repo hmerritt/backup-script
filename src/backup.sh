@@ -48,6 +48,36 @@ if [ "${ARGS[0]}" == "install" ]; then
 fi
 
 
+## Setup user config file
+if [ "${ARGS[0]}" == "setup" ]; then
+	action "Setting up backup.sh"
+
+	## TODO: install dependencies
+
+	task "Creating backup-config file"
+	if [ ! -f "backup-config.sh" ]; then
+		echo '## Backup Configuration File
+############################
+
+DIR_ROOT_LOCAL=""
+DIR_ROOT_BACKUP=""
+
+
+## ENTER FOLDERS TO BACKUP HERE
+###############################
+## backup "name-of-folder" "/directory-of-parent-folder/" "/directory-of-parent-backup-folder/"
+## backup "profile-images" "/my/images/" "/my/backup/google-drive/images/"
+
+' >> "backup-config.sh"
+	fi
+	onfail
+
+	echo
+	success "Setup complete"
+	exit
+fi
+
+
 ## Perform a "quick tar" - create tar of an item in same directory
 ## - ARGS[1]: name of file/folder to tar
 if [ "${ARGS[0]}" == "qtar" ] || [ "${ARGS[0]}" == "quick-tar" ]; then
