@@ -55,7 +55,9 @@ if [ "${ARGS[0]}" == "setup" ]; then
 	## TODO: install dependencies
 
 	task "Creating backup-config file"
-	if [ ! -f "backup-config.sh" ]; then
+	if isfile "backup-config.sh"; then
+		warning "backup-config already exists. skipping task"
+	else
 		echo '## Backup Configuration File
 ############################
 
@@ -111,12 +113,33 @@ fi
 ##------------------------------------------------------------------------------
 
 
-## ENTER FOLDERS TO BACKUP HERE
-###############################
-## backup "name-of-folder" "/directory-of-parent-folder/" "/directory-of-parent-backup-folder/"
-## backup "profile-images" "/my/images/" "/my/backup/google-drive/images/"
+## Import user config file
+action "Loading config file"
 
-source "${ARGS[0]}"
+## Check for cli argument
+if [ "${CONFIG_PATH}" == "" ]; then
+
+	## Fallback to opening default config-file
+	CONFIG_PATH="backup-config.sh"
+
+	warning "No config file entered"
+	task "Attempting to open default config-file: ${CONFIG_PATH}"
+fi
+
+## Check if config file exists
+if isfile "${CONFIG_PATH}"; then
+
+	## Load config
+	source "${CONFIG_PATH}"
+	success "Loaded config"
+
+else
+
+	## Failed to find config
+	error "Unable to open config file: ${CONFIG_PATH}"
+	warning "You can create another config using: backup setup"
+	forcefail
+fi
 
 
 ##------------------------------------------------------------------------------

@@ -13,6 +13,9 @@ SCRIPT_PATH=`dirname "$(readlink -f "$0")"`
 ##------------------------------------------------------------------------------
 
 
+CONFIG_PATH="${ARGS[0]}"
+
+
 CURRENT_ACTION=""
 CURRENT_TASK=""
 
