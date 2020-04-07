@@ -1,6 +1,9 @@
 #!/bin/bash
 
 
+ARGS=("$@")
+
+
 ## Import modules
 source "modules/module-loader.sh"
 loadmodules "${modules}" "modules"
@@ -45,6 +48,38 @@ if [ "${ARGS[0]}" == "install" ]; then
 fi
 
 
+## Setup user config file
+if [ "${ARGS[0]}" == "setup" ]; then
+	action "Setting up backup.sh"
+
+	## TODO: install dependencies
+
+	task "Creating backup-config file"
+	if isfile "backup-config.sh"; then
+		warning "backup-config already exists. skipping task"
+	else
+		echo '## Backup Configuration File
+############################
+
+DIR_ROOT_LOCAL=""
+DIR_ROOT_BACKUP=""
+
+
+## ENTER FOLDERS TO BACKUP HERE
+###############################
+## backup "name-of-folder" "/directory-of-parent-folder/" "/directory-of-parent-backup-folder/"
+## backup "profile-images" "/my/images/" "/my/backup/google-drive/images/"
+
+' >> "backup-config.sh"
+	fi
+	onfail
+
+	echo
+	success "Setup complete"
+	exit
+fi
+
+
 ## Perform a "quick tar" - create tar of an item in same directory
 ## - ARGS[1]: name of file/folder to tar
 if [ "${ARGS[0]}" == "qtar" ] || [ "${ARGS[0]}" == "quick-tar" ]; then
@@ -78,10 +113,33 @@ fi
 ##------------------------------------------------------------------------------
 
 
-## ENTER FOLDERS TO BACKUP HERE
-###############################
-## backup "name-of-folder" "/directory-of-parent-folder/" "/directory-of-parent-backup-folder/"
-## backup "profile-images" "/my/images/" "/my/backup/google-drive/images/"
+## Import user config file
+action "Loading config file"
+
+## Check for cli argument
+if [ "${CONFIG_PATH}" == "" ]; then
+
+	## Fallback to opening default config-file
+	CONFIG_PATH="backup-config.sh"
+
+	warning "No config file entered"
+	task "Attempting to open default config-file: ${CONFIG_PATH}"
+fi
+
+## Check if config file exists
+if isfile "${CONFIG_PATH}"; then
+
+	## Load config
+	source "${CONFIG_PATH}"
+	success "Loaded config"
+
+else
+
+	## Failed to find config
+	error "Unable to open config file: ${CONFIG_PATH}"
+	warning "You can create another config using: backup setup"
+	forcefail
+fi
 
 
 ##------------------------------------------------------------------------------

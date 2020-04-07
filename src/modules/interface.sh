@@ -1,10 +1,10 @@
 #!/bin/bash
 
 
-# Color codes
+## Color codes
 NOCOLOR="\033[0m"
 
-# Text
+## Text
 BLACK="\e[30m"
 RED="\e[31m"
 GREEN="\e[32m"
@@ -22,7 +22,7 @@ LIGHTPURPLE="\e[95m"
 LIGHTCYAN="\e[96m"
 WHITE="\e[97m"
 
-# Background
+## Background
 BG_RED="\e[41m${WHITE}"
 BG_GREEN="\e[42m${WHITE}"
 BG_YELLOW="\e[43m${WHITE}"
@@ -37,9 +37,9 @@ BG_WHITE="\e[107m${WHITE}"
 ##------------------------------------------------------------------------------
 
 
-# Print colored text to the terminal
-# - $1: color
-# - $2: text
+## Print colored text to the terminal
+## - $1: color
+## - $2: text
 cprint () {
 	echo -e "$1$2${NOCOLOR}"
 }
@@ -48,9 +48,9 @@ cprint () {
 ##------------------------------------------------------------------------------
 
 
-# Print colored text
-# - $1: text
-# -> output colored text with no background
+## Print colored text
+## - $1: text
+## -> output colored text with no background
 white () {
 	cprint $WHITE "${1}"
 }
@@ -71,8 +71,8 @@ orange () {
 ##------------------------------------------------------------------------------
 
 
-# Print message by named state
-# - $1: text
+## Print message by named state
+## - $1: text
 success () {
 	cprint $BG_GREEN "${1}"
 }
@@ -103,7 +103,7 @@ task () {
 ##------------------------------------------------------------------------------
 
 
-# Print script title & version number
+## Print script title & version number
 title () {
 	green "Backup [Version ${VERSION}]"
 }
