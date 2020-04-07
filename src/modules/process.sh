@@ -1,13 +1,13 @@
 #!/bin/bash
 
 
-# Check latest exit code
+## Check latest exit code
 exitcheck () {
 	return $?
 }
 
 
-# Print what the script was doing when the error occured
+## Print what the script was doing when the error occured
 errortrace () {
 	error "Error Trace:"
 	error "-> Action: ${CURRENT_ACTION}"
@@ -15,26 +15,39 @@ errortrace () {
 }
 
 
-# Print message when a process fails
+## Print message when a process fails
 onfail () {
 	if [ "${?}" != "0" ]; then
 
-		# Check for additional error message
+		## Check for additional error message
 		if [ "${2}" != "" ]; then
 			error "${2}"
 		fi
 
-		# Print what the script was doing when the error occured
+		## Print what the script was doing when the error occured
 		errortrace
 
-		# Print failure message
+		## Print failure message
 		if [ "${1}" != "" ]; then
 			failure "${1}"
 		else
 			failure "Failed: ${CURRENT_ACTION}"
 		fi
 
-		# Exit script
+		## Exit script
 		exit 1
 	fi
+}
+
+
+## Simulate a scrpit failure
+simfail () {
+	return 1
+}
+
+
+## Force a script failure
+forcefail () {
+	simfail
+	onfail
 }
