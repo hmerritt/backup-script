@@ -9,9 +9,8 @@ MODULES_PATH="${SRC_PATH}/modules"
 
 
 ## Import modules
-source "${MODULES_PATH}/global.sh"
-source "${MODULES_PATH}/interface.sh"
-source "${MODULES_PATH}/process.sh"
+source "${MODULES_PATH}/moduleloader.sh"
+loadmodules "${modules}" "${MODULES_PATH}"
 
 
 ##
@@ -34,19 +33,21 @@ task "Remove source file links"
 sed -r "s/source .*//g" "${SRC_PATH}/backup.sh" > "${BUILD_PATH}/backup.sh"
 onfail
 
+task "Remove loadmodules"
+sed -i "s/loadmodules .*//g" "${BUILD_PATH}/backup.sh"
+onfail
+
 
 action "Bundle source modules"
 
-declare -a arr=("global.sh" "interface.sh" "process.sh" "files.sh")
-
-for i in "${arr[@]}"
+for mod in "${modules[@]}"
 do
-	task "Add ${i} to bundle"
-	cat "${MODULES_PATH}/${i}" >> "${BUILD_PATH}/modules.sh"
+	task "Add ${mod} to bundle"
+	cat "${MODULES_PATH}/${mod}.sh" >> "${BUILD_PATH}/modules.sh"
 	onfail
 done
 
-task "Remove all haashbangs from module bundle"
+task "Remove development code from module bundle"
 sed -i "s/\#\!\/bin\/bash//g" "${BUILD_PATH}/modules.sh"
 onfail
 
