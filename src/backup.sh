@@ -1,32 +1,29 @@
 #!/bin/bash
 
 
-# Script path
-SCRIPT_PATH=`dirname "$(readlink -f "$0")"`
+## Import modules
+source "modules/moduleloader.sh"
+loadmodules "${modules}" "modules"
 
 
-# Import modules
-source "${SCRIPT_PATH}/modules/global.sh"
-source "${SCRIPT_PATH}/modules/interface.sh"
-source "${SCRIPT_PATH}/modules/process.sh"
-source "${SCRIPT_PATH}/modules/files.sh"
+##------------------------------------------------------------------------------
 
 
-# Print script title
+## Print script title
 title
 
 
 ##------------------------------------------------------------------------------
 
 
-# Print script version
+## Print script version
 if [ "${ARGS[0]}" == "version" ]; then
 	echo
 	exit
 fi
 
 
-# Install script dependencies
+## Install script dependencies
 if [ "${ARGS[0]}" == "install" ]; then
 	action "Install script dependencies"
 
@@ -48,11 +45,11 @@ if [ "${ARGS[0]}" == "install" ]; then
 fi
 
 
-# Perform a "quick tar" - create tar of an item in same directory
-# - ARGS[1]: name of file/folder to tar
+## Perform a "quick tar" - create tar of an item in same directory
+## - ARGS[1]: name of file/folder to tar
 if [ "${ARGS[0]}" == "qtar" ] || [ "${ARGS[0]}" == "quick-tar" ]; then
 
-	# Check if item to backup has been entered
+	## Check if item to backup has been entered
 	if [ "${ARGS[1]}" == "" ]; then
 		action "Quick-Tar (qtar)"
 		echo "Tar item in the current directory (uses name of item to backup as final name)"
@@ -81,15 +78,15 @@ fi
 ##------------------------------------------------------------------------------
 
 
-# ENTER FOLDERS TO BACKUP HERE
-##############################
-# backup "name-of-folder" "/directory-of-parent-folder/" "/directory-of-parent-backup-folder/"
-# backup "profile-images" "/my/images/" "/my/backup/google-drive/images/"
+## ENTER FOLDERS TO BACKUP HERE
+###############################
+## backup "name-of-folder" "/directory-of-parent-folder/" "/directory-of-parent-backup-folder/"
+## backup "profile-images" "/my/images/" "/my/backup/google-drive/images/"
 
 
 ##------------------------------------------------------------------------------
 
 
-# Print finish message
+## Print finish message
 echo
 success "Backup complete"
