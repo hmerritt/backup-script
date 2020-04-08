@@ -5,7 +5,7 @@
 ## - $1: path to original file
 ## - $2: path of new file
 move () {
-	mv "${1}" "${2}" --verbose
+	mv "${1}" "${2}"
 }
 
 
@@ -38,7 +38,7 @@ isdirectory () {
 ## - $1: name of new tar
 ## - $2: path of file/directory to tar
 compress () {
-	tar --use-compress-program="pigz --best --recursive --no-time" -cvf "${1}.tar.gz" "${2}"
+	tar --use-compress-program="pigz --best --recursive --no-time" -cf "${1}.tar.gz" "${2}"
 }
 
 
