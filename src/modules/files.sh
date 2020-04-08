@@ -55,7 +55,9 @@ backup () {
 	local TMP_FOLDER="/var/tmp"
 	local TMP_FILE="${TMP_FOLDER}/${1}"
 
-	cd $DIR_ROOT_LOCAL$2
+	if [ "${DIR_ROOT_LOCAL}" != "" ] || [ "${2}" != "" ]; then
+		cd "${DIR_ROOT_LOCAL}${2}"
+	fi
 
 	task "Compressing ${1}"
 	compress "${TMP_FILE}" "${1}"
