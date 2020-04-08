@@ -52,7 +52,7 @@ compress () {
 backup () {
 	action "Backing up ${1}"
 
-	local TMP_FOLDER="${SCRIPT_PATH}/tmp"
+	local TMP_FOLDER="/var/tmp"
 	local TMP_FILE="${TMP_FOLDER}/${1}"
 
 	cd $DIR_ROOT_LOCAL$2
