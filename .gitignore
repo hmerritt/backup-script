@@ -1,6 +1,6 @@
 *.tar
 *.tar.gz
 
-build/*
+build/bin/*
 
 src/backup-config.*
