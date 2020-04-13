@@ -1,10 +1,10 @@
 #!/bin/bash
 
 
-## Script path
+## Script vars
 SCRIPT_PATH=`dirname "$(readlink -f "$0")"`
-BUILD_PATH="${SCRIPT_PATH}/build"
-SRC_PATH="${SCRIPT_PATH}/src"
+BUILD_PATH="${SCRIPT_PATH}/bin"
+SRC_PATH="${SCRIPT_PATH}/../src"
 MODULES_PATH="${SRC_PATH}/modules"
 
 
