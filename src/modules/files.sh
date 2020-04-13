@@ -56,7 +56,7 @@ backup () {
 	local TMP_FILE="${TMP_FOLDER}/${1}"
 
 	if [ "${DIR_ROOT_LOCAL}" != "" ] || [ "${2}" != "" ]; then
-		cd "${DIR_ROOT_LOCAL}${2}"
+		cd "${DIR_ROOT_LOCAL}${2}" || onfail "" "Error opening directory '${DIR_ROOT_LOCAL}${2}'"
 	fi
 
 	task "Compressing ${1}"
