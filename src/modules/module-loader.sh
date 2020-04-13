@@ -18,7 +18,8 @@ loadmodules () {
 ## Default modules to load
 declare -a modules=(
 	"global"
-	"interface" 
+	"interface"
 	"process"
+	"compression"
 	"files"
 )

@@ -34,17 +34,6 @@ isdirectory () {
 ##------------------------------------------------------------------------------
 
 
-## Create a compressed tar (uses parallel cpu multi-threading)
-## - $1: name of new tar
-## - $2: path of file/directory to tar
-compress () {
-	tar --use-compress-program="pigz --best --recursive --no-time" -cf "${1}.tar.gz" "${2}"
-}
-
-
-##------------------------------------------------------------------------------
-
-
 ## Backup individual file/folder
 ## - $1: name of item to backup
 ## - $2: directory of the item to backup
