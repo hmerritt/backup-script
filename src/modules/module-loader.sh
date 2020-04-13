@@ -7,7 +7,7 @@
 loadmodules () {
 	## Loop modules array
 	for mod in "${modules[@]}"; do
-		source "${2}/${mod}.sh"
+		source "${2}/${mod}.sh" || exit 1
 	done
 }
 
