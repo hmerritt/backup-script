@@ -80,12 +80,11 @@ DIR_ROOT_BACKUP=""
 fi
 
 
-## Perform a "quick tar" - create tar of an item in same directory
+## Perform a "quick tar" - creates tar of an item in the current directory
 ## - ARGS[1]: name of file/folder to tar
 if [ "${ARGS[0]}" == "qtar" ] || [ "${ARGS[0]}" == "quick-tar" ]; then
-
 	## Check if item to backup has been entered
-	if [ "${ARGS[1]}" == "" ]; then
+	if [ "${ARGS[0]}" == "" ]; then
 		action "Quick-Tar (qtar)"
 		echo "Tar item in the current directory (uses name of item to backup as final name)"
 		action "Usage:"
@@ -98,14 +97,7 @@ if [ "${ARGS[0]}" == "qtar" ] || [ "${ARGS[0]}" == "quick-tar" ]; then
 		exit 1
 	fi
 
-	action "Creating a Quick-Tar in the same directory"
-
-	task "Tar `green ${ARGS[1]}` -> `green ${ARGS[1]}.tar.gz`"
-	compress "${ARGS[1]}" "${ARGS[1]}"
-	onfail
-
-	echo
-	success "Quick-Tar complete"
+	qtar "${ARGS[1]}"
 	exit
 fi
 
