@@ -47,19 +47,19 @@ backup () {
 
 	action "Backing up ${item_name}"
 
-	local TMP_FOLDER="/var/tmp"
-	local TMP_FILE="${TMP_FOLDER}/${item_name}"
+	local tmp_folder="/var/tmp"
+	local tmp_file="${tmp_folder}/${item_name}"
 
 	if [ "${DIR_ROOT_LOCAL}" != "" ] || [ "${item_dir_local}" != "" ]; then
 		cd "${DIR_ROOT_LOCAL}${item_dir_local}" || onfail "" "Error opening directory '${DIR_ROOT_LOCAL}${item_dir_local}'"
 	fi
 
 	task "Compressing ${item_name}"
-	compress "${TMP_FILE}" "${item_name}"
+	compress "${tmp_file}" "${item_name}"
 	onfail
 
 	task "Moving ${item_name} to backup location"
-	move "${TMP_FILE}.tar.gz" "${DIR_ROOT_BACKUP}${item_dir_backup}${item_name}.tar.gz"
+	move "${tmp_file}.tar.gz" "${DIR_ROOT_BACKUP}${item_dir_backup}${item_name}.tar.gz"
 	onfail
 
 	green "Completed: ${item_name}"
