@@ -36,11 +36,11 @@ if [ "${ARGS[0]}" == "install" ]; then
 
 	task "Install tar"
 	apt-get install tar -y
-	onfail "" "Are you root?"
+	onfail
 
 	task "Install pigz"
 	apt-get install pigz -y
-	onfail "" "Are you root?"
+	onfail
 
 	echo
 	success "Install complete"
@@ -122,7 +122,7 @@ fi
 if isfile "${CONFIG_PATH}"; then
 
 	## Load config
-	success "Config loaded"
+	green "Config loaded"
 	source "${CONFIG_PATH}"
 
 else

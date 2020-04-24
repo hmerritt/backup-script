@@ -56,5 +56,5 @@ backup () {
 	move "${TMP_FILE}.tar.gz" "${DIR_ROOT_BACKUP}${3}${1}.tar.gz"
 	onfail
 
-	success "Completed: ${1}"
+	green "Completed: ${1}"
 }

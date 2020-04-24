@@ -28,5 +28,5 @@ qtar () {
 	compress "${1}" "${1}"
 	onfail
 
-	success "Completed Quick-Tar: ${1}"
+	green "Completed Quick-Tar: ${1}"
 }
