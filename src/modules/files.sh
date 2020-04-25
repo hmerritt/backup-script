@@ -47,15 +47,17 @@ backup () {
 
 	action "Backing up ${item_name}"
 
-	## Set tmp folder location
+	## Set folder locations
 	local tmp_folder="/var/tmp"
 	local tmp_file="${tmp_folder}/${item_name}"
+	local dir_local="${DIR_ROOT_LOCAL}${item_dir_local}"
+	local dir_backup="${DIR_ROOT_BACKUP}${item_dir_backup}"
 
 	## If root folder exists
 	## Use absolute file paths
 	if [ "${DIR_ROOT_LOCAL}" != "" ] || [ "${item_dir_local}" != "" ]; then
-		cd "${DIR_ROOT_LOCAL}${item_dir_local}" || \
-		   onfail "" "Error opening directory '${DIR_ROOT_LOCAL}${item_dir_local}'"
+		cd "${dir_local}" || \
+		   onfail "" "Error opening directory '${dir_local}'"
 	fi
 
 	## Tar.gz item
@@ -64,16 +66,16 @@ backup () {
 	onfail
 
 	##  If backup folder does not exist
-	if ! isdirectory "${DIR_ROOT_BACKUP}${item_dir_backup}"; then
+	if ! isdirectory "${dir_backup}"; then
 		##  Create backup folder location
 		task "Creating backup location"
-		mkdir -p "${DIR_ROOT_BACKUP}${item_dir_backup}" & spinner
+		mkdir -p "${dir_backup}" & spinner
 		onfail
 	fi
 
 	## Move item from tmp/ to backup location
 	task "Moving to backup location"
-	move "${tmp_file}.tar.gz" "${DIR_ROOT_BACKUP}${item_dir_backup}${item_name}.tar.gz" & spinner
+	move "${tmp_file}.tar.gz" "${dir_backup}${item_name}.tar.gz" & spinner
 	onfail
 
 	green "Completed: ${item_name}"
