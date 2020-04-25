@@ -40,27 +40,44 @@ isdirectory () {
 ## - $3: directory of the backup location
 backup () {
 
-	##  Get args | use fallback values
-	item_name=$(fallback "${1}" "")
-	item_dir_local=$(fallback "${2}" "/")
-	item_dir_backup=$(fallback "${3}" "${item_dir_local}")
+	## Get args | use fallback values
+	local item_name=$(fallback "${1}" "")
+	local item_dir_local=$(fallback "${2}" "/")
+	local item_dir_backup=$(fallback "${3}" "${item_dir_local}")
 
 	action "Backing up ${item_name}"
 
+	## Set folder locations
 	local tmp_folder="/var/tmp"
 	local tmp_file="${tmp_folder}/${item_name}"
+	local dir_local="${DIR_ROOT_LOCAL}${item_dir_local}"
+	local dir_backup="${DIR_ROOT_BACKUP}${item_dir_backup}"
 
+	## If root folder exists
+	## Use absolute file paths
 	if [ "${DIR_ROOT_LOCAL}" != "" ] || [ "${item_dir_local}" != "" ]; then
-		cd "${DIR_ROOT_LOCAL}${item_dir_local}" || onfail "" "Error opening directory '${DIR_ROOT_LOCAL}${item_dir_local}'"
+		cd "${dir_local}" || \
+		   onfail "" "Error opening directory '${dir_local}'"
 	fi
 
-	task "Compressing ${item_name}"
+	## Tar.gz item
+	task "Compressing"
 	compress "${tmp_file}" "${item_name}" & spinner
 	onfail
 
-	task "Moving ${item_name} to backup location"
-	move "${tmp_file}.tar.gz" "${DIR_ROOT_BACKUP}${item_dir_backup}${item_name}.tar.gz" & spinner
+	##  If backup folder does not exist
+	if ! isdirectory "${dir_backup}"; then
+		##  Create backup folder location
+		task "Creating backup location"
+		mkdir -p "${dir_backup}" & spinner
+		onfail
+	fi
+
+	## Move item from tmp/ to backup location
+	task "Moving to backup location"
+	move "${tmp_file}.tar.gz" "${dir_backup}${item_name}.tar.gz" & spinner
 	onfail
 
 	green "Completed: ${item_name}"
+
 }
