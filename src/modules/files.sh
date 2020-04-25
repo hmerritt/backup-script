@@ -41,9 +41,9 @@ isdirectory () {
 backup () {
 
 	## Get args | use fallback values
-	item_name=$(fallback "${1}" "")
-	item_dir_local=$(fallback "${2}" "/")
-	item_dir_backup=$(fallback "${3}" "${item_dir_local}")
+	local item_name=$(fallback "${1}" "")
+	local item_dir_local=$(fallback "${2}" "/")
+	local item_dir_backup=$(fallback "${3}" "${item_dir_local}")
 
 	action "Backing up ${item_name}"
 
@@ -59,20 +59,20 @@ backup () {
 	fi
 
 	## Tar.gz item
-	task "Compressing ${item_name}"
+	task "Compressing"
 	compress "${tmp_file}" "${item_name}" & spinner
 	onfail
 
 	##  If backup folder does not exist
 	if ! isdirectory "${DIR_ROOT_BACKUP}${item_dir_backup}"; then
 		##  Create backup folder location
-		task "Creating backup folder"
-		mkdir -p "${DIR_ROOT_BACKUP}${item_dir_backup}"
+		task "Creating backup location"
+		mkdir -p "${DIR_ROOT_BACKUP}${item_dir_backup}" & spinner
 		onfail
 	fi
 
 	## Move item from tmp/ to backup location
-	task "Moving ${item_name} to backup location"
+	task "Moving to backup location"
 	move "${tmp_file}.tar.gz" "${DIR_ROOT_BACKUP}${item_dir_backup}${item_name}.tar.gz" & spinner
 	onfail
 
