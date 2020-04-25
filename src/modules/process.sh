@@ -1,6 +1,25 @@
 #!/bin/bash
 
 
+## Use a fallback value if initial value does not exist
+## - Usage: value=$(fallback $1 "fallback")
+## - $1: initial value
+## - $2: fallback value
+fallback () {
+	local value=$1
+
+	##  Check for NULL/empty value
+	if [ ! -n "${value}" ]; then
+		local value=$2
+	fi
+
+	echo "${value}"
+}
+
+
+##------------------------------------------------------------------------------
+
+
 ## Check latest exit code
 exitcheck () {
 	return $?

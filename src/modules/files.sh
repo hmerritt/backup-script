@@ -39,22 +39,28 @@ isdirectory () {
 ## - $2: directory of the item to backup
 ## - $3: directory of the backup location
 backup () {
-	action "Backing up ${1}"
 
-	local TMP_FOLDER="/var/tmp"
-	local TMP_FILE="${TMP_FOLDER}/${1}"
+	##  Get args | use fallback values
+	item_name=$(fallback "${1}" "")
+	item_dir_local=$(fallback "${2}" "/")
+	item_dir_backup=$(fallback "${3}" "${item_dir_local}")
 
-	if [ "${DIR_ROOT_LOCAL}" != "" ] || [ "${2}" != "" ]; then
-		cd "${DIR_ROOT_LOCAL}${2}" || onfail "" "Error opening directory '${DIR_ROOT_LOCAL}${2}'"
+	action "Backing up ${item_name}"
+
+	local tmp_folder="/var/tmp"
+	local tmp_file="${tmp_folder}/${item_name}"
+
+	if [ "${DIR_ROOT_LOCAL}" != "" ] || [ "${item_dir_local}" != "" ]; then
+		cd "${DIR_ROOT_LOCAL}${item_dir_local}" || onfail "" "Error opening directory '${DIR_ROOT_LOCAL}${item_dir_local}'"
 	fi
 
-	task "Compressing ${1}"
-	compress "${TMP_FILE}" "${1}"
+	task "Compressing ${item_name}"
+	compress "${tmp_file}" "${item_name}" & spinner
 	onfail
 
-	task "Moving ${1} to backup location"
-	move "${TMP_FILE}.tar.gz" "${DIR_ROOT_BACKUP}${3}${1}.tar.gz"
+	task "Moving ${item_name} to backup location"
+	move "${tmp_file}.tar.gz" "${DIR_ROOT_BACKUP}${item_dir_backup}${item_name}.tar.gz" & spinner
 	onfail
 
-	success "Completed: ${1}"
+	green "Completed: ${item_name}"
 }
