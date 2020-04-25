@@ -63,6 +63,14 @@ backup () {
 	compress "${tmp_file}" "${item_name}" & spinner
 	onfail
 
+	##  If backup folder does not exist
+	if ! isdirectory "${DIR_ROOT_BACKUP}${item_dir_backup}"; then
+		##  Create backup folder location
+		task "Creating backup folder"
+		mkdir -p "${DIR_ROOT_BACKUP}${item_dir_backup}"
+		onfail
+	fi
+
 	## Move item from tmp/ to backup location
 	task "Moving ${item_name} to backup location"
 	move "${tmp_file}.tar.gz" "${DIR_ROOT_BACKUP}${item_dir_backup}${item_name}.tar.gz" & spinner
