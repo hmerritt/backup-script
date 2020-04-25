@@ -25,7 +25,7 @@ qtar () {
 		forcefail
 	fi
 
-	compress "${1}" "${1}"
+	compress "${1}" "${1}" & spinner
 	onfail
 
 	green "Completed Quick-Tar: ${1}"

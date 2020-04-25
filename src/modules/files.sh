@@ -55,11 +55,11 @@ backup () {
 	fi
 
 	task "Compressing ${item_name}"
-	compress "${tmp_file}" "${item_name}"
+	compress "${tmp_file}" "${item_name}" & spinner
 	onfail
 
 	task "Moving ${item_name} to backup location"
-	move "${tmp_file}.tar.gz" "${DIR_ROOT_BACKUP}${item_dir_backup}${item_name}.tar.gz"
+	move "${tmp_file}.tar.gz" "${DIR_ROOT_BACKUP}${item_dir_backup}${item_name}.tar.gz" & spinner
 	onfail
 
 	green "Completed: ${item_name}"
