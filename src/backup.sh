@@ -58,19 +58,21 @@ if [ "${ARGS[0]}" == "setup" ]; then
 	if isfile "backup-config.sh"; then
 		warning "backup-config already exists. skipping task"
 	else
-		echo '## Backup Configuration File
+		echo "## Backup Configuration File
 ############################
 
-DIR_ROOT_LOCAL=""
-DIR_ROOT_BACKUP=""
-
+## Set custom config vars
+dir_root_local=\"${dir_root_local}\"
+dir_root_backup=\"${dir_root_backup}\"
+tmp_folder=\"${tmp_folder}\"
+tar_args=\"${tar_args}\"
 
 ## ENTER FOLDERS TO BACKUP HERE
 ###############################
-## backup "name-of-folder" "/directory-of-parent-folder/" "/directory-of-parent-backup-folder/"
-## backup "profile-images" "/my/images/" "/my/backup/google-drive/images/"
+## backup \"name-of-folder\" \"/directory-of-parent-folder/\" \"/directory-of-parent-backup-folder/\"
+## backup \"profile-images\" \"/my/images/\" \"/my/backup/google-drive/images/\"
 
-' >> "backup-config.sh"
+" >> "backup-config.sh"
 	fi
 	onfail
 

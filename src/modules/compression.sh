@@ -4,8 +4,15 @@
 ## Create a compressed tar (uses parallel cpu multi-threading)
 ## - $1: name of new tar
 ## - $2: path of file/directory to tar
+## - $3: custom tar args
 compress () {
-	tar --use-compress-program="pigz --best --recursive --no-time" -cf "${1}.tar.gz" "${2}"
+	## Check for custom tar arguments
+	## Only add custom args if they exist
+	if [ ! -n "${3}" ]; then
+		tar --use-compress-program="pigz --best --recursive --no-time" -cf "${1}.tar.gz" "${2}"
+	else
+		tar --use-compress-program="pigz --best --recursive --no-time" -cf "${1}.tar.gz" "${2}" "${3}"
+	fi
 }
 
 
@@ -25,7 +32,7 @@ qtar () {
 		forcefail
 	fi
 
-	compress "${1}" "${1}" & spinner
+	compress "${1}" "${1}"
 	onfail
 
 	green "Completed Quick-Tar: ${1}"

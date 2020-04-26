@@ -20,5 +20,8 @@ CURRENT_ACTION=""
 CURRENT_TASK=""
 
 
-DIR_ROOT_LOCAL=""
-DIR_ROOT_BACKUP=""
+# Backup vars
+dir_root_local=""
+dir_root_backup=""
+tmp_folder="/var/tmp"
+tar_args=""
