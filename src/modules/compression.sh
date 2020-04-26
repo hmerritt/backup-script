@@ -11,7 +11,7 @@ compress () {
 	if [ ! -n "${3}" ]; then
 		tar --use-compress-program="pigz --best --recursive --no-time" -cf "${1}.tar.gz" "${2}"
 	else
-		tar --use-compress-program="pigz --best --recursive --no-time" -cf "${1}.tar.gz" "${2}" "${3}"
+		tar "${3}" --use-compress-program="pigz --best --recursive --no-time" -cf "${1}.tar.gz" "${2}"
 	fi
 }
 
