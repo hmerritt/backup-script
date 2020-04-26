@@ -61,8 +61,8 @@ if [ "${ARGS[0]}" == "setup" ]; then
 		echo '## Backup Configuration File
 ############################
 
-DIR_ROOT_LOCAL=""
-DIR_ROOT_BACKUP=""
+dir_root_local=""
+dir_root_backup=""
 
 
 ## ENTER FOLDERS TO BACKUP HERE

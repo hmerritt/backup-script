@@ -48,14 +48,13 @@ backup () {
 	action "Backing up ${item_name}"
 
 	## Set folder locations
-	local tmp_folder="/var/tmp"
 	local tmp_file="${tmp_folder}/${item_name}"
-	local dir_local="${DIR_ROOT_LOCAL}${item_dir_local}"
-	local dir_backup="${DIR_ROOT_BACKUP}${item_dir_backup}"
+	local dir_local="${dir_root_local}${item_dir_local}"
+	local dir_backup="${dir_root_backup}${item_dir_backup}"
 
 	## If root folder exists
 	## Use absolute file paths
-	if [ "${DIR_ROOT_LOCAL}" != "" ] || [ "${item_dir_local}" != "" ]; then
+	if [ "${dir_root_local}" != "" ] || [ "${item_dir_local}" != "" ]; then
 		cd "${dir_local}" || \
 		   onfail "" "Error opening directory '${dir_local}'"
 	fi
