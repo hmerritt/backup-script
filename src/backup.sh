@@ -61,9 +61,11 @@ if [ "${ARGS[0]}" == "setup" ]; then
 		echo '## Backup Configuration File
 ############################
 
+## Set custom config vars
 dir_root_local=""
 dir_root_backup=""
-
+tmp_folder="/var/tmp"
+tar_args=""
 
 ## ENTER FOLDERS TO BACKUP HERE
 ###############################

@@ -61,7 +61,7 @@ backup () {
 
 	## Tar.gz item
 	task "Compressing"
-	compress "${tmp_file}" "${item_name}"
+	compress "${tmp_file}" "${item_name}" "${tar_args}"
 	onfail
 
 	##  If backup folder does not exist
