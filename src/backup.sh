@@ -59,9 +59,10 @@ if [ "${ARGS[0]}" == "update" ]; then
 
 	task "Checking for newer version"
 	github_tags_url="https://api.github.com/repos/hmerritt/backup-script/tags"
-	version_latest=$(curl -s "${github_tags_url}" | grep -Po -m 1 '[^v]*[0-9]\.[0-9]\.[0-9]')
+	#version_latest=$(curl -s "${github_tags_url}" | grep -Po -m 1 '[^v]*[0-9]\.[0-9]\.[0-9]')
 	onfail
-
+	VERSION=0.2.1
+	version_latest=0.2.2
 	## Compare current version with latest
 	## Prevents needless update
 	if [ "${VERSION//.}" -ge "${version_latest//.}" ]; then
@@ -73,8 +74,23 @@ if [ "${ARGS[0]}" == "update" ]; then
 	fi
 
 	task "Fetching latest version"
-	#
-	#
+	github_file="https://github.com/hmerritt/backup-script/releases/download/v${version_latest}/backup.sh"
+	cd "/var/tmp" || "/tmp"
+	curl -Ls "${github_file}" -o "backup.sh"
+	first_line=$(head -n 1 "backup.sh")
+	if [ "${first_line}" != "#!/bin/bsash" ]; then
+		echo
+		error "Failed to fetch latest version: v${version_latest}"
+		error "-> Could not verify downloaded file"
+		echo
+		warning "You could try fetching it manually from GitHub"
+		warning "${github_file}"
+		echo
+		failure "Update failed"
+
+		rm "backup.sh"
+		exit 1
+	fi
 	onfail
 
 	task "Replacing script with newer version"
@@ -86,7 +102,7 @@ if [ "${ARGS[0]}" == "update" ]; then
 	green "Updated: ${VERSION} --> ${version_latest}"
 
 	echo
-	success "Install complete"
+	success "Update complete"
 	exit
 fi
 
