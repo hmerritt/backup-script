@@ -1,11 +1,5 @@
 language: bash
 
-install:
-    - sudo add-apt-repository ppa:neurobin/ppa -y
-    - sudo apt-get update -q
-    - sudo apt-get install shc -y
-    - sudo apt-get install gcc -y
-
 before_script:
     - cd build
 
@@ -18,7 +12,6 @@ deploy:
     api_key: $GITHUB_OAUTH_TOKEN
     file:
         - "bin/backup.sh"
-        - "bin/backup"
     skip_cleanup: true
     on:
         repo: hmerritt/backup-script
