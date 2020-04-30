@@ -95,6 +95,8 @@ if [ "${ARGS[0]}" == "update" ]; then
 	task "Replacing script with newer version"
 	mv "backup.sh" "${SCRIPT_PATH}/${SCRIPT_NAME}"
 	onfail
+	chmod +x "${SCRIPT_PATH}/${SCRIPT_NAME}"
+	onfail
 
 	echo
 	green "Updated: ${VERSION} --> ${version_latest}"
