@@ -60,8 +60,17 @@ if [ "${ARGS[0]}" == "update" ]; then
 	task "Checking for newer version"
 	github_tags_url="https://api.github.com/repos/hmerritt/backup-script/tags"
 	version_latest=$(curl -s "${github_tags_url}" | grep -Po -m 1 '[^v]*[0-9]\.[0-9]\.[0-9]')
-	echo "${version_latest}"
 	onfail
+
+	## Compare current version with latest
+	## Prevents needless update
+	if [ "${VERSION//.}" -ge "${version_latest//.}" ]; then
+		echo
+		green "No new update available"
+		green "-> v${version_latest} is latest"
+		echo
+		exit 0
+	fi
 
 	task "Fetching latest version"
 	#
