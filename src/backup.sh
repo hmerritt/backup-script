@@ -42,6 +42,10 @@ if [ "${ARGS[0]}" == "install" ]; then
 	apt-get install pigz -y
 	onfail
 
+	task "Install cURL"
+	apt-get install curl -y
+	onfail
+
 	echo
 	success "Install complete"
 	exit
@@ -54,8 +58,9 @@ if [ "${ARGS[0]}" == "update" ]; then
 	action "Update script to latest version"
 
 	task "Checking for newer version"
-	#
-	#
+	github_tags_url="https://api.github.com/repos/hmerritt/backup-script/tags"
+	version_latest=$(curl -s "${github_tags_url}" | grep -Po -m 1 '[^v]*[0-9]\.[0-9]\.[0-9]')
+	echo "${version_latest}"
 	onfail
 
 	task "Fetching latest version"
@@ -69,7 +74,7 @@ if [ "${ARGS[0]}" == "update" ]; then
 	onfail
 
 	echo
-	green "Updated: ${VERSION} --> ${VERSION_LATEST}"
+	green "Updated: ${VERSION} --> ${version_latest}"
 
 	echo
 	success "Install complete"
