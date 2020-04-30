@@ -8,6 +8,7 @@ VERSION="0.2.3"
 
 
 SCRIPT_PATH=`dirname "$(readlink -f "$0")"`
+SCRIPT_NAME="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
 
 
 ##------------------------------------------------------------------------------
