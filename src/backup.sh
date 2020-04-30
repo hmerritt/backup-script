@@ -48,6 +48,35 @@ if [ "${ARGS[0]}" == "install" ]; then
 fi
 
 
+## Update script to latest version
+## (overwrites itself)
+if [ "${ARGS[0]}" == "update" ]; then
+	action "Update script to latest version"
+
+	task "Checking for newer version"
+	#
+	#
+	onfail
+
+	task "Fetching latest version"
+	#
+	#
+	onfail
+
+	task "Replacing script with newer version"
+	#
+	#
+	onfail
+
+	echo
+	green "Updated: ${VERSION} --> ${VERSION_LATEST}"
+
+	echo
+	success "Install complete"
+	exit
+fi
+
+
 ## Setup user config file
 if [ "${ARGS[0]}" == "setup" ]; then
 	action "Setting up backup.sh"
