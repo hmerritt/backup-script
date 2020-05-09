@@ -26,3 +26,5 @@ dir_root_local=""
 dir_root_backup=""
 tmp_folder="/var/tmp"
 tar_args=""
+
+ERROR=""
