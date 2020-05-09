@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-VERSION="0.2.3"
+VERSION="0.2.4"
 
 
 ##------------------------------------------------------------------------------
@@ -26,3 +26,5 @@ dir_root_local=""
 dir_root_backup=""
 tmp_folder="/var/tmp"
 tar_args=""
+
+ERROR=""

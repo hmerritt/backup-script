@@ -22,18 +22,20 @@ compress () {
 ## Perform a "quick tar" - creates tar of an item in the current directory
 ## - $1: name of file/folder to tar
 qtar () {
-	action "Creating a Quick-Tar in the same directory"
-	task "Tar `green ${1}` -> `green ${1}.tar.gz`"
+	task "Running Quick-Tar in current directory"
+	actionsub "Tar `green ${1}` -> `green ${1}.tar.gz`"
 
 	##  Check if $1 exists
 	if [ "${1}" == "" ]; then
-		error "Unable to run qtar"
+		result "not-ok"
+		error "\nUnable to run qtar"
 		warning "No file/folder entered"
-		forcefail
+		exit 1
 	fi
 
-	compress "${1}" "${1}"
-	onfail
+	ERROR=$(compress "${1}" "${1}" 2>&1)
+	onfail "" "${ERROR}"
 
-	green "Completed Quick-Tar: ${1}"
+	result "ok";
+	success "\nCompleted Quick-Tar: ${1}"
 }

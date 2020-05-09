@@ -89,47 +89,28 @@ warning () {
 	orange "${1}"
 }
 
+
 action () {
 	CURRENT_ACTION="${1}"
-	white "\n${1}"
+	echo -ne "${1}  : "
+}
+
+actionsub () {
+	action "  *  ${1}"
+	CURRENT_ACTION="${1}"
 }
 
 task () {
 	CURRENT_TASK="${1}"
-	white "-> ${1}"
+	echo -e "${1}"
 }
 
-
-##------------------------------------------------------------------------------
-
-
-function spinner() {
-	# Make sure we use non-unicode character type locale
-	# (that way it works for any locale as long as the font supports the characters)
-	local LC_CTYPE=C
-
-	# Get pid of running task
-	local pid=$!
-
-	# Define spinner properties
-	local spin='⠾⠷⠯⠟⠻⠽'  # '-\|/'  '⣾⣷⣯⣟⡿⢿⣻⣽' '⣾⣯⣻⡿⣷⣽⣟⢿' '⣾⣷⣽⣯⣻⣟⢿⡿'
-	local charwidth=3
-
-	# Make cursor invisible
-	tput civis
-	while kill -0 $pid 2>/dev/null; do
-		local i=$(((i + $charwidth) % ${#spin}))
-		printf "%s" "${spin:$i:$charwidth}"
-
-		echo -en "\033[$1D"
-		sleep .1
-	done
-	tput cnorm
-
-	# Capture exit code
-	wait $pid
-
-	return $?
+result () {
+	if [ "${1}" == "done" ] || [ "${1}" == "ok" ]; then
+		green "DONE"
+	else
+		error "ERROR"
+	fi
 }
 
 
@@ -138,5 +119,5 @@ function spinner() {
 
 ## Print script title & version number
 title () {
-	green "Backup [Version ${VERSION}]"
+	green "Backup [Version ${VERSION}]\n"
 }
