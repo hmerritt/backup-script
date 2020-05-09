@@ -38,13 +38,15 @@ errortrace () {
 onfail () {
 	if [ "${?}" != "0" ]; then
 
+		result "not-ok"
+
+		echo
+
 		## Check for additional error message
 		if [ "${2}" != "" ]; then
 			error "${2}"
+			echo
 		fi
-
-		## Print what the script was doing when the error occured
-		errortrace
 
 		## Print failure message
 		if [ "${1}" != "" ]; then
