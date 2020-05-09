@@ -28,23 +28,27 @@ fi
 
 ## Install script dependencies
 if [ "${ARGS[0]}" == "install" ]; then
-	action "Install script dependencies"
+	task "Install script dependencies"
 
-	task "Update package repo"
-	apt-get update -y
+	actionsub "Update package repo"
+	ERROR=$(apt-get update -y 2>&1)
 	onfail "" "Are you root?"
+	result "ok"
 
-	task "Install tar"
-	apt-get install tar -y
-	onfail
+	actionsub "Install tar"
+	ERROR=$(apt-get install tar -y 2>&1)
+	onfail "" "${ERROR}"
+	result "ok"
 
-	task "Install pigz"
-	apt-get install pigz -y
-	onfail
+	actionsub "Install pigz"
+	ERROR=$(apt-get install pigz -y 2>&1)
+	onfail "" "${ERROR}"
+	result "ok"
 
-	task "Install cURL"
-	apt-get install curl -y
-	onfail
+	actionsub "Install cURL"
+	ERROR=$(apt-get install curl -y 2>&1)
+	onfail "" "${ERROR}"
+	result "ok"
 
 	echo
 	success "Install complete"
@@ -55,12 +59,13 @@ fi
 ## Update script to latest version
 ## (overwrites itself)
 if [ "${ARGS[0]}" == "update" ]; then
-	action "Update script to latest version"
+	task "Update script to latest version"
 
-	task "Checking for newer version"
+	actionsub "Checking for newer version"
 	github_tags_url="https://api.github.com/repos/hmerritt/backup-script/tags"
 	version_latest=$(curl -s "${github_tags_url}" | grep -Po -m 1 '[^v]*[0-9]\.[0-9]\.[0-9]')
-	onfail
+	onfail "" "${version_latest}"
+	result "ok"
 
 	## Compare current version with latest
 	## Prevents needless update
@@ -72,10 +77,13 @@ if [ "${ARGS[0]}" == "update" ]; then
 		exit 0
 	fi
 
-	task "Fetching latest version"
+	actionsub "Fetching latest version"
 	github_file="https://github.com/hmerritt/backup-script/releases/download/v${version_latest}/backup.sh"
 	cd "/var/tmp" || "/tmp"
-	curl -Ls "${github_file}" -o "backup.sh"
+	ERROR=$(curl -L "${github_file}" -o "backup.sh" 2>&1)
+	onfail "" "${ERROR}"
+
+	## Varify downloaded file
 	first_line=$(head -n 1 "backup.sh")
 	if [ "${first_line}" != "#!/bin/bash" ]; then
 		echo
@@ -91,12 +99,14 @@ if [ "${ARGS[0]}" == "update" ]; then
 		exit 1
 	fi
 	onfail
+	result "ok"
 
-	task "Replacing script with newer version"
-	mv "backup.sh" "${SCRIPT_PATH}/${SCRIPT_NAME}"
-	onfail
-	chmod +x "${SCRIPT_PATH}/${SCRIPT_NAME}"
-	onfail
+	actionsub "Replacing script with newer version"
+	ERROR=$(mv "backup.sh" "${SCRIPT_PATH}/${SCRIPT_NAME}" 2>&1)
+	onfail "" "${ERROR}"
+	ERROR=$(chmod +x "${SCRIPT_PATH}/${SCRIPT_NAME}" 2>&1)
+	onfail "" "${ERROR}"
+	result "ok"
 
 	echo
 	green "Updated: ${VERSION} --> ${version_latest}"
@@ -108,14 +118,14 @@ fi
 
 
 ## Setup user config file
-if [ "${ARGS[0]}" == "setup" ]; then
+if [ "${ARGS[0]}" == "setup" ] || [ "${ARGS[0]}" == "init" ]; then
 	action "Setting up backup.sh"
 
 	## TODO: install dependencies
 
 	task "Creating backup-config file"
 	if isfile "backup.config"; then
-		warning "backup-config already exists. skipping task"
+		warning "backup.config already exists. skipping task"
 	else
 		echo "## Backup Configuration File
 ############################
@@ -156,7 +166,7 @@ if [ "${ARGS[0]}" == "qtar" ] || [ "${ARGS[0]}" == "quick-tar" ]; then
 		echo ":~$ ls"
 		echo "images images.tar.gz"
 		echo
-		exit 1
+		exit 0
 	fi
 
 	qtar "${ARGS[1]}"
@@ -176,23 +186,23 @@ if [ "${CONFIG_PATH}" == "" ]; then
 	## Fallback to opening default config-file
 	CONFIG_PATH="backup.config"
 
-	warning "No config file entered"
-	task "Attempting to open default config-file: ${CONFIG_PATH}"
 fi
 
 ## Check if config file exists
 if isfile "${CONFIG_PATH}"; then
 
 	## Load config
-	green "Config loaded"
+	result "ok"
+	task "\nRunning Backups"
 	source "${CONFIG_PATH}"
 
 else
 
 	## Failed to find config
-	error "Unable to open config file: ${CONFIG_PATH}"
-	warning "You can create another config using: backup setup"
-	forcefail
+	result "not-ok"
+	error "\nUnable to open config file: ${CONFIG_PATH}"
+	warning "You can create a new config using: backup init"
+	exit 0
 
 fi
 

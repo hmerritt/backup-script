@@ -45,7 +45,7 @@ backup () {
 	local item_dir_local=$(fallback "${2}" "/")
 	local item_dir_backup=$(fallback "${3}" "${item_dir_local}")
 
-	action "Backing up ${item_name}"
+	actionsub "${item_name}"
 
 	## Set folder locations
 	local tmp_file="${tmp_folder}/${item_name}"
@@ -60,23 +60,20 @@ backup () {
 	fi
 
 	## Tar.gz item
-	task "Compressing"
-	compress "${tmp_file}" "${item_name}" "${tar_args}"
-	onfail
+	ERROR=$(compress "${tmp_file}" "${item_name}" "${tar_args}" 2>&1)
+	onfail "" "${ERROR}"
 
 	##  If backup folder does not exist
 	if ! isdirectory "${dir_backup}"; then
 		##  Create backup folder location
-		task "Creating backup location"
-		mkdir -p "${dir_backup}"
-		onfail
+		ERROR=$(mkdir -p "${dir_backup}" 2>&1)
+		onfail "" "${ERROR}"
 	fi
 
 	## Move item from tmp/ to backup location
-	task "Moving to backup location"
-	move "${tmp_file}.tar.gz" "${dir_backup}${item_name}.tar.gz"
-	onfail
+	ERROR=$(move "${tmp_file}.tar.gz" "${dir_backup}${item_name}.tar.gz" 2>&1)
+	onfail "" "${ERROR}"
 
-	green "Completed: ${item_name}"
+	result "ok"
 
 }
