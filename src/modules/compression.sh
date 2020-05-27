@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-## Create a compressed tar (uses parallel cpu multi-threading)
+## Create a compressed tar.gz (uses parallel cpu multi-threading)
 ## - $1: name of new tar
 ## - $2: path of file/directory to tar
 ## - $3: custom tar args
@@ -12,6 +12,20 @@ compress () {
 		tar --use-compress-program="pigz --best --recursive --no-time" -cf "${1}.tar.gz" "${2}"
 	else
 		tar "${3}" --use-compress-program="pigz --best --recursive --no-time" -cf "${1}.tar.gz" "${2}"
+	fi
+}
+
+## decompress tar.gz
+## - $1: name of tar
+## - $2: path of file/directory to tar
+## - $3: custom tar args
+decompress () {
+	## Check for custom tar arguments
+	## Only add custom args if they exist
+	if [ ! -n "${3}" ]; then
+		tar -xzf "${1}.tar.gz" --directory "${2}"
+	else
+		tar "${3}" -xzf "${1}.tar.gz" --directory "${2}"
 	fi
 }
 
