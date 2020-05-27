@@ -77,3 +77,36 @@ backup () {
 	result "ok"
 
 }
+
+## Restore backup (tar.gz)
+## - $1: name of item to restore
+## - $2: directory of the item to restore
+## - $3: directory of the restore location
+restore () {
+
+	## Get args | use fallback values
+	local item_name=$(fallback "${1}" "")
+	local item_dir_backup=$(fallback "${2}" "/")
+	local item_dir_restore=$(fallback "${3}" "${item_dir_backup}")
+
+	actionsub "restore:${item_name}"
+
+	## Set folder locations
+	local dir_backup="${dir_root_backup}${item_dir_backup}"
+	local dir_restore="${dir_root_local}${item_dir_restore}"
+
+	## If root folder exists
+	## Use absolute file paths
+	if [ "${dir_root_local}" != "" ] || [ "${item_dir_restore}" != "" ]; then
+		cd "${dir_restore}" || \
+		   onfail "" "Error opening directory '${dir_restore}'"
+	fi
+
+	## Tar.gz item
+	##                  full-path to tar.gz         restore path
+	ERROR=$(decompress "${dir_backup}${item_name}" "${dir_restore}" "${tar_args}" 2>&1)
+	onfail "" "${ERROR}"
+
+	result "ok"
+
+}
