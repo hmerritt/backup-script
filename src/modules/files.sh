@@ -39,7 +39,6 @@ isdirectory () {
 ## - $2: directory of the item to backup
 ## - $3: directory of the backup location
 backup () {
-
 	## Get args | use fallback values
 	local item_name=$(fallback "${1}" "")
 	local item_dir_local=$(fallback "${2}" "/")
@@ -75,7 +74,6 @@ backup () {
 	onfail "" "${ERROR}"
 
 	result "ok"
-
 }
 
 ## Restore backup (tar.gz)
@@ -83,7 +81,6 @@ backup () {
 ## - $2: directory of the item to restore
 ## - $3: directory of the restore location
 restore () {
-
 	## Get args | use fallback values
 	local item_name=$(fallback "${1}" "")
 	local item_dir_backup=$(fallback "${2}" "/")
@@ -94,6 +91,10 @@ restore () {
 	## Set folder locations
 	local dir_backup="${dir_root_backup}${item_dir_backup}"
 	local dir_restore="${dir_root_local}${item_dir_restore}"
+
+	## Create restore folder location
+	ERROR=$(mkdir -p "${dir_restore}" 2>&1)
+	onfail "" "${ERROR}"
 
 	## If root folder exists
 	## Use absolute file paths
@@ -108,5 +109,4 @@ restore () {
 	onfail "" "${ERROR}"
 
 	result "ok"
-
 }
