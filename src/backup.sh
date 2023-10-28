@@ -51,7 +51,8 @@ if [ "${ARGS[0]}" == "install" ]; then
 	result "ok"
 
 	echo
-	success "Install complete"
+	SCRIPT_ELAPSED_TIME=$(($SECONDS - $SCRIPT_START_TIME))
+	success "Install completed in ${SCRIPT_ELAPSED_TIME}s"
 	exit
 fi
 
@@ -112,7 +113,8 @@ if [ "${ARGS[0]}" == "update" ]; then
 	green "Updated: ${VERSION} --> ${version_latest}"
 
 	echo
-	success "Update complete"
+	SCRIPT_ELAPSED_TIME=$(($SECONDS - $SCRIPT_START_TIME))
+	success "Update completed in ${SCRIPT_ELAPSED_TIME}s"
 	exit
 fi
 
@@ -147,7 +149,8 @@ tar_args=\"${tar_args}\"
 	onfail
 
 	echo
-	success "Setup complete"
+	SCRIPT_ELAPSED_TIME=$(($SECONDS - $SCRIPT_START_TIME))
+	success "Setup completed in ${SCRIPT_ELAPSED_TIME}s"
 	exit
 fi
 
