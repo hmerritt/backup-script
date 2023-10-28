@@ -212,4 +212,5 @@ fi
 
 ## Print finish message
 echo
-success "Backup complete"
+SCRIPT_ELAPSED_TIME=$(($SECONDS - $SCRIPT_START_TIME))
+success "Backup completed in ${SCRIPT_ELAPSED_TIME}s"
